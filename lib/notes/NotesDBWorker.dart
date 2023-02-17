@@ -39,7 +39,7 @@ class NotesDBWorker {
 
   Map<String, dynamic> noteToMap(Note inNote) {
     Map<String, dynamic> map = Map<String, dynamic>();
-    map['id'] = inNote.id;
+    map["id"] = inNote.id;
     map["title"] = inNote.title;
     map["content"] = inNote.content;
     map["content"] = inNote.content;
