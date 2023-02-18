@@ -11,10 +11,7 @@ class NotesEntry extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  /// Constructor.
   NotesEntry() {
-    print("## NotesEntry.constructor");
-
     _titleEditingController.addListener(() {
       notesModel.entityBeingEdited.title = _titleEditingController.text;
     });
@@ -24,8 +21,6 @@ class NotesEntry extends StatelessWidget {
   }
 
   Widget build(BuildContext inContext) {
-    print("## NotesEntry.build()");
-
     if (notesModel.entityBeingEdited != null) {
       _titleEditingController.text = notesModel.entityBeingEdited.title;
       _contentEditingController.text = notesModel.entityBeingEdited.content;
@@ -37,17 +32,17 @@ class NotesEntry extends StatelessWidget {
             (BuildContext inContext, Widget inChild, NotesModel inModel) {
           return Scaffold(
               bottomNavigationBar: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                   child: Row(children: [
                     TextButton(
-                        child: Text("Cancel"),
+                        child: Text('Cancel'),
                         onPressed: () {
                           FocusScope.of(inContext).requestFocus(FocusNode());
                           inModel.setStackIndex(0);
                         }),
                     Spacer(),
                     TextButton(
-                        child: Text("Save"),
+                        child: Text('Save'),
                         onPressed: () async {
                           await _save(inContext, notesModel);
                         })
@@ -58,11 +53,11 @@ class NotesEntry extends StatelessWidget {
                     ListTile(
                         leading: Icon(Icons.title),
                         title: TextFormField(
-                            decoration: InputDecoration(hintText: "Title"),
+                            decoration: InputDecoration(hintText: 'Title'),
                             controller: _titleEditingController,
                             validator: (String inValue) {
                               if (inValue.length == 0) {
-                                return "Please enter a title";
+                                return 'Please enter a title';
                               }
                               return null;
                             })),
@@ -70,12 +65,13 @@ class NotesEntry extends StatelessWidget {
                         leading: Icon(Icons.content_paste),
                         title: TextFormField(
                             keyboardType: TextInputType.multiline,
-                            maxLines: 8,
-                            decoration: InputDecoration(hintText: "Content"),
+                            minLines: 1,
+                            maxLines: 10,
+                            decoration: InputDecoration(hintText: 'Content'),
                             controller: _contentEditingController,
                             validator: (String inValue) {
                               if (inValue.length == 0) {
-                                return "Please enter content";
+                                _contentEditingController.text = '';
                               }
                               return null;
                             })),
@@ -89,13 +85,13 @@ class NotesEntry extends StatelessWidget {
                                               color: Colors.red, width: 18) +
                                           Border.all(
                                               width: 6,
-                                              color: notesModel.color == "red"
+                                              color: notesModel.color == 'red'
                                                   ? Colors.red
                                                   : Theme.of(inContext)
                                                       .canvasColor))),
                               onTap: () {
-                                notesModel.entityBeingEdited.color = "red";
-                                notesModel.setColor("red");
+                                notesModel.entityBeingEdited.color = 'red';
+                                notesModel.setColor('red');
                               }),
                           Spacer(),
                           GestureDetector(
@@ -105,13 +101,13 @@ class NotesEntry extends StatelessWidget {
                                               color: Colors.green, width: 18) +
                                           Border.all(
                                               width: 6,
-                                              color: notesModel.color == "green"
+                                              color: notesModel.color == 'green'
                                                   ? Colors.green
                                                   : Theme.of(inContext)
                                                       .canvasColor))),
                               onTap: () {
-                                notesModel.entityBeingEdited.color = "green";
-                                notesModel.setColor("green");
+                                notesModel.entityBeingEdited.color = 'green';
+                                notesModel.setColor('green');
                               }),
                           Spacer(),
                           GestureDetector(
@@ -121,13 +117,13 @@ class NotesEntry extends StatelessWidget {
                                               color: Colors.blue, width: 18) +
                                           Border.all(
                                               width: 6,
-                                              color: notesModel.color == "blue"
+                                              color: notesModel.color == 'blue'
                                                   ? Colors.blue
                                                   : Theme.of(inContext)
                                                       .canvasColor))),
                               onTap: () {
-                                notesModel.entityBeingEdited.color = "blue";
-                                notesModel.setColor("blue");
+                                notesModel.entityBeingEdited.color = 'blue';
+                                notesModel.setColor('blue');
                               }),
                           Spacer(),
                           GestureDetector(
@@ -138,13 +134,13 @@ class NotesEntry extends StatelessWidget {
                                           Border.all(
                                               width: 6,
                                               color:
-                                                  notesModel.color == "yellow"
+                                                  notesModel.color == 'yellow'
                                                       ? Colors.yellow
                                                       : Theme.of(inContext)
                                                           .canvasColor))),
                               onTap: () {
-                                notesModel.entityBeingEdited.color = "yellow";
-                                notesModel.setColor("yellow");
+                                notesModel.entityBeingEdited.color = 'yellow';
+                                notesModel.setColor('yellow');
                               }),
                           Spacer(),
                           GestureDetector(
@@ -154,30 +150,30 @@ class NotesEntry extends StatelessWidget {
                                               color: Colors.grey, width: 18) +
                                           Border.all(
                                               width: 6,
-                                              color: notesModel.color == "grey"
+                                              color: notesModel.color == 'grey'
                                                   ? Colors.grey
                                                   : Theme.of(inContext)
                                                       .canvasColor))),
                               onTap: () {
-                                notesModel.entityBeingEdited.color = "grey";
-                                notesModel.setColor("grey");
+                                notesModel.entityBeingEdited.color = 'grey';
+                                notesModel.setColor('grey');
                               }),
                           Spacer(),
                           GestureDetector(
                               child: Container(
                                   decoration: ShapeDecoration(
                                       shape: Border.all(
-                                              color: Colors.purple, width: 18) +
+                                              color: Colors.cyan, width: 18) +
                                           Border.all(
                                               width: 6,
                                               color:
-                                                  notesModel.color == "purple"
-                                                      ? Colors.purple
+                                                  notesModel.color == 'cyan'
+                                                      ? Colors.cyan
                                                       : Theme.of(inContext)
                                                           .canvasColor))),
                               onTap: () {
-                                notesModel.entityBeingEdited.color = "purple";
-                                notesModel.setColor("purple");
+                                notesModel.entityBeingEdited.color = 'cyan';
+                                notesModel.setColor('cyan');
                               })
                         ]))
                   ])));
@@ -190,17 +186,15 @@ class NotesEntry extends StatelessWidget {
     }
 
     if (inModel.entityBeingEdited.id == null) {
-      print("## NotesEntry._save(): Creating: ${inModel.entityBeingEdited}");
       await NotesDBWorker.db.create(notesModel.entityBeingEdited);
     } else {
-      print("## NotesEntry._save(): Updating: ${inModel.entityBeingEdited}");
       await NotesDBWorker.db.update(notesModel.entityBeingEdited);
     }
-    notesModel.loadData("notes", NotesDBWorker.db);
+    notesModel.loadData('notes', NotesDBWorker.db);
     inModel.setStackIndex(0);
     ScaffoldMessenger.of(inContext).showSnackBar(SnackBar(
         backgroundColor: Colors.green,
         duration: Duration(seconds: 2),
-        content: Text("Note saved")));
+        content: Text('Note saved')));
   }
 }

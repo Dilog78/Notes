@@ -13,12 +13,12 @@ class NoteList extends StatelessWidget {
         builder: (BuildContext inContext, Widget inChild, NotesModel inModel) {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add, color: Colors.white),
               onPressed: () {
                 notesModel.entityBeingEdited = Note();
                 notesModel.setColor(null);
                 notesModel.setStackIndex(1);
               },
+              child: Icon(Icons.add, color: Colors.white),
             ),
             body: ListView.builder(
               itemCount: notesModel.entityList.length,
@@ -29,27 +29,27 @@ class NoteList extends StatelessWidget {
                   case 'red':
                     color = Colors.red;
                     break;
-                  case "green":
+                  case 'green':
                     color = Colors.green;
                     break;
-                  case "blue":
+                  case 'blue':
                     color = Colors.blue;
                     break;
-                  case "yellow":
+                  case 'yellow':
                     color = Colors.yellow;
                     break;
-                  case "grey":
+                  case 'grey':
                     color = Colors.grey;
                     break;
-                  case "purple":
-                    color = Colors.purple;
+                  case 'cyan':
+                    color = Colors.cyan;
                     break;
                 }
                 return Container(
                   padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                   child: Slidable(
                     endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
+                      motion: const BehindMotion(),
                       children: [
                         SlidableAction(
                           onPressed: (BuildContext inContext) async {
