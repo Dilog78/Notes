@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:notes/notes/Notes.dart';
+import 'package:notes/tasks/Tasks.dart';
 import 'package:path_provider/path_provider.dart';
 import "utils.dart" as utils;
 
@@ -20,20 +21,20 @@ class NotesBook extends StatelessWidget {
   Widget build(BuildContext inContext) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 1,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Notes'),
+            title: Center(child: Text('Notes')),
             bottom: TabBar(
               tabs: [
                 Tab(
                   icon: Icon(Icons.note),
                   text: 'Notes',
                 ),
-                // Tab(
-                //   icon: Icon(Icons.assignment_turned_in),
-                //   text: 'Tasks',
-                // ),
+                Tab(
+                  icon: Icon(Icons.assignment_turned_in),
+                  text: 'Tasks',
+                ),
                 // Tab(
                 //   icon: Icon(Icons.contacts),
                 //   text: 'Contacts',
@@ -47,8 +48,8 @@ class NotesBook extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              // Appointments(), Contacts(), Notes(), Tasks()
-              Notes()
+              //Contacts(),  Appointments() Tasks()
+              Notes(), Tasks()
             ],
           ),
         ),

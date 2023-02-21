@@ -3,7 +3,7 @@ import 'package:notes/BaseModel.dart';
 class Note {
   int id;
   String title;
-  String content;
+  String content = '';
   String color;
 
   String toString () {

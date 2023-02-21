@@ -82,16 +82,16 @@ class NotesEntry extends StatelessWidget {
                               child: Container(
                                   decoration: ShapeDecoration(
                                       shape: Border.all(
-                                              color: Colors.red, width: 18) +
+                                              color: Colors.cyan, width: 18) +
                                           Border.all(
                                               width: 6,
-                                              color: notesModel.color == 'red'
-                                                  ? Colors.red
+                                              color: notesModel.color == 'cyan'
+                                                  ? Colors.cyan
                                                   : Theme.of(inContext)
                                                       .canvasColor))),
                               onTap: () {
-                                notesModel.entityBeingEdited.color = 'red';
-                                notesModel.setColor('red');
+                                notesModel.entityBeingEdited.color = 'cyan';
+                                notesModel.setColor('cyan');
                               }),
                           Spacer(),
                           GestureDetector(
@@ -159,22 +159,6 @@ class NotesEntry extends StatelessWidget {
                                 notesModel.setColor('grey');
                               }),
                           Spacer(),
-                          GestureDetector(
-                              child: Container(
-                                  decoration: ShapeDecoration(
-                                      shape: Border.all(
-                                              color: Colors.cyan, width: 18) +
-                                          Border.all(
-                                              width: 6,
-                                              color:
-                                                  notesModel.color == 'cyan'
-                                                      ? Colors.cyan
-                                                      : Theme.of(inContext)
-                                                          .canvasColor))),
-                              onTap: () {
-                                notesModel.entityBeingEdited.color = 'cyan';
-                                notesModel.setColor('cyan');
-                              })
                         ]))
                   ])));
         }));
