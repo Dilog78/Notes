@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:notes/tasks/TasksModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'TasksDBWorker.dart';
 
 class TasksList extends StatelessWidget {
+
   Widget build(BuildContext inContext) {
     return ScopedModel<TasksModel>(
       model: tasksModel,
@@ -23,18 +23,11 @@ class TasksList extends StatelessWidget {
             body: ListView.builder(
               padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               itemCount: tasksModel.entityList.length,
-              itemBuilder: (BuildContext inBuildContext, int inIndex) {
+              itemBuilder: (BuildContext inContext, int inIndex) {
                 Task task = tasksModel.entityList[inIndex];
-                String sDueDate;
-                if (task.dueDate != null) {
-                  List dateParts = task.dueDate.split(',');
-                  DateTime dueDate = DateTime(int.parse(dateParts[0]),
-                      int.parse(dateParts[1]), int.parse(dateParts[2]));
-                  sDueDate =
-                      DateFormat.yMMMMd('de_DE').format(dueDate.toLocal());
-                }
                 return ListTile(
                   leading: Checkbox(
+                    checkColor: Colors.white,
                     value: task.completed == 'true' ? true : false,
                     onChanged: (inValue) async {
                       task.completed = inValue.toString();
@@ -46,7 +39,8 @@ class TasksList extends StatelessWidget {
                       style: task.completed == 'true'
                           ? TextStyle(
                               color: Theme.of(inContext).disabledColor,
-                              decoration: TextDecoration.lineThrough)
+                              decoration: TextDecoration.lineThrough
+                      )
                           : TextStyle(
                               color: Theme.of(inContext)
                                   .textTheme
@@ -54,7 +48,7 @@ class TasksList extends StatelessWidget {
                                   .color)),
                   subtitle: task.dueDate == null
                       ? null
-                      : Text(sDueDate,
+                      : Text(task.dueDate,
                           style: task.completed == 'true'
                               ? TextStyle(
                                   color: Theme.of(inContext).disabledColor,
@@ -74,7 +68,7 @@ class TasksList extends StatelessWidget {
                     if (tasksModel.entityBeingEdited.dueDate == null) {
                       tasksModel.setChosenDate(null);
                     } else {
-                      tasksModel.setChosenDate(sDueDate);
+                      tasksModel.setChosenDate(task.dueDate);
                     }
                     tasksModel.setStackIndex(1);
                   },

@@ -95,7 +95,7 @@ class TasksEntry extends StatelessWidget {
     } else {
       await TasksDBWorker.db.update(tasksModel.entityBeingEdited);
     }
-
+    inModel.entityBeingEdited.completed = 'false';
     tasksModel.loadData('tasks', TasksDBWorker.db);
     inModel.setStackIndex(0);
     ScaffoldMessenger.of(inContext).showSnackBar(SnackBar(

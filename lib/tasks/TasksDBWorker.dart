@@ -32,9 +32,9 @@ class TasksDBWorker {
   Task taskFromMap(Map inMap) {
     Task task = Task();
     task.id = inMap['id'];
-    task.description = inMap['description '];
-    task.dueDate = inMap['dueDate '];
-    task.completed = inMap['completed '];
+    task.description = inMap['description'];
+    task.dueDate = inMap['dueDate'];
+    task.completed = inMap['completed'];
     return task;
   }
 
