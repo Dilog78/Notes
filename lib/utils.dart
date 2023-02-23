@@ -31,8 +31,8 @@ Future selectDate(BuildContext inContext,
       'November',
       'December'
     ];
-    List dateParts = inDateString.split(",");
-    int numOfMonth = months.indexOf(dateParts[1]);
+    List dateParts = inDateString.split(',');
+    final int numOfMonth = months.indexOf(dateParts[1]);
 
     initDate = DateTime(int.parse(dateParts[0]), numOfMonth+1,
         int.parse(dateParts[2]));

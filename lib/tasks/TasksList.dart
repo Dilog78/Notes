@@ -5,7 +5,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'TasksDBWorker.dart';
 
 class TasksList extends StatelessWidget {
-
   Widget build(BuildContext inContext) {
     return ScopedModel<TasksModel>(
       model: tasksModel,
@@ -25,30 +24,27 @@ class TasksList extends StatelessWidget {
               itemCount: tasksModel.entityList.length,
               itemBuilder: (BuildContext inContext, int inIndex) {
                 Task task = tasksModel.entityList[inIndex];
-                return ListTile(
-                  leading: Checkbox(
-                    checkColor: Colors.white,
-                    value: task.completed == 'true' ? true : false,
-                    onChanged: (inValue) async {
-                      task.completed = inValue.toString();
-                      await TasksDBWorker.db.update(task);
-                      tasksModel.loadData('tasks', TasksDBWorker.db);
+                return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(color: Colors.red,),
+                    confirmDismiss: (DismissDirection) async {
+                      if (task.completed == 'true') {
+                            await _deleteTask(inContext, task);
+                            tasksModel.entityList.removeAt(inIndex);
+                            return true;
+                          } else return false;
                     },
-                  ),
-                  title: Text('${task.description}',
-                      style: task.completed == 'true'
-                          ? TextStyle(
-                              color: Theme.of(inContext).disabledColor,
-                              decoration: TextDecoration.lineThrough
-                      )
-                          : TextStyle(
-                              color: Theme.of(inContext)
-                                  .textTheme
-                                  .titleMedium
-                                  .color)),
-                  subtitle: task.dueDate == null
-                      ? null
-                      : Text(task.dueDate,
+                    child: ListTile(
+                      leading: Checkbox(
+                        checkColor: Colors.white,
+                        value: task.completed == 'true' ? true : false,
+                        onChanged: (inValue) async {
+                          task.completed = inValue.toString();
+                          await TasksDBWorker.db.update(task);
+                          tasksModel.loadData('tasks', TasksDBWorker.db);
+                        },
+                      ),
+                      title: Text('${task.description}',
                           style: task.completed == 'true'
                               ? TextStyle(
                                   color: Theme.of(inContext).disabledColor,
@@ -58,21 +54,32 @@ class TasksList extends StatelessWidget {
                                       .textTheme
                                       .titleMedium
                                       .color)),
-                  onTap: () async {
-                    if (task.completed == 'true') {
-                      await _deleteTask(inContext, task);
-                      return;
-                    }
-                    tasksModel.entityBeingEdited =
-                        await TasksDBWorker.db.get(task.id);
-                    if (tasksModel.entityBeingEdited.dueDate == null) {
-                      tasksModel.setChosenDate(null);
-                    } else {
-                      tasksModel.setChosenDate(task.dueDate);
-                    }
-                    tasksModel.setStackIndex(1);
-                  },
-                );
+                      subtitle: task.dueDate == null
+                          ? null
+                          : Text(task.dueDate,
+                              style: task.completed == 'true'
+                                  ? TextStyle(
+                                      color: Theme.of(inContext).disabledColor,
+                                      decoration: TextDecoration.lineThrough)
+                                  : TextStyle(
+                                      color: Theme.of(inContext)
+                                          .textTheme
+                                          .titleMedium
+                                          .color)),
+                      onTap: () async {
+                        if (task.completed == 'true') {
+                          return;
+                        }
+                        tasksModel.entityBeingEdited =
+                            await TasksDBWorker.db.get(task.id);
+                        if (tasksModel.entityBeingEdited.dueDate == null) {
+                          tasksModel.setChosenDate(null);
+                        } else {
+                          tasksModel.setChosenDate(task.dueDate);
+                        }
+                        tasksModel.setStackIndex(1);
+                      },
+                    ));
               },
             ),
           );
@@ -82,32 +89,6 @@ class TasksList extends StatelessWidget {
   }
 
   Future _deleteTask(BuildContext inContext, Task inTask) async {
-    return await showDialog(
-        context: inContext,
-        barrierDismissible: false,
-        builder: (BuildContext inAlertContext) {
-          return AlertDialog(
-              title: Text('Delete Task'),
-              content: Text(
-                  'Are you sure you want to delete ${inTask.description}?'),
-              actions: [
-                TextButton(
-                    child: Text('Cancel'),
-                    onPressed: () {
-                      Navigator.of(inAlertContext).pop();
-                    }),
-                TextButton(
-                    child: Text('Delete'),
-                    onPressed: () async {
-                      await TasksDBWorker.db.delete(inTask.id);
-                      Navigator.of(inAlertContext).pop();
-                      ScaffoldMessenger.of(inContext).showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          duration: Duration(seconds: 2),
-                          content: Text('Task deleted')));
-                      tasksModel.loadData('tasks', TasksDBWorker.db);
-                    })
-              ]);
-        });
+    await TasksDBWorker.db.delete(inTask.id);
   }
 }
