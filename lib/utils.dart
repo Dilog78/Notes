@@ -7,6 +7,25 @@ import 'package:intl/date_symbol_data_local.dart';
 
 Directory docsDir;
 
+int parseMonth(String month) {
+  List<String> months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  return months.indexOf(month)+1;
+}
+
 Future selectDate(BuildContext inContext,
     BaseModel inModel,
     String inDateString) async {
@@ -17,24 +36,11 @@ Future selectDate(BuildContext inContext,
 
   DateTime initDate = DateTime.now();
   if (inDateString != null) {
-    List<String> months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-    List dateParts = inDateString.split(',');
-    final int numOfMonth = months.indexOf(dateParts[1]);
 
-    initDate = DateTime(int.parse(dateParts[0]), numOfMonth+1,
+    List dateParts = inDateString.split(',');
+    int month = parseMonth(dateParts[1]);
+
+    initDate = DateTime(int.parse(dateParts[0]), month,
         int.parse(dateParts[2]));
   }
 

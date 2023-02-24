@@ -1,3 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'ContactsDBWorker.dart';
+import 'ContactsEntry.dart';
+import 'ContactsList.dart';
+import 'ContactsModel.dart';
+
 class Contacts extends StatelessWidget {
 
   Contacts() {
